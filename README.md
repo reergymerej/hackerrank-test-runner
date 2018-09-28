@@ -2,7 +2,7 @@
 
 [HackerRank](https://www.hackerrank.com/) encourages you to write code in your
 own editor.  They provide sample test cases for you to use.  They do _not_
-provide an easy way for you to run process the data while you develop.
+provide an easy way for you to process the data while you develop.
 
 This is a test runner designed to help with this process, providing immediate
 feedback while completing challenges.
@@ -10,11 +10,33 @@ feedback while completing challenges.
 
 ## Usage
 
-Assuming you've downloaded the test cases from HackerRank and exported the .zip
-to `2d-array/tests`, you can test them with
+
+
+Assuming you've downloaded the test cases from HackerRank, exported the .zip,
+and you have a structure like this
+
 
 ```
-hrtr 2d-array/solution.js 2d-array/tests
+▾ 2d-array/
+  ▾ tests/
+    ▾ input/
+        input00.txt
+        input01.txt
+        input03.txt
+        input08.txt
+    ▾ output/
+        output00.txt
+        output01.txt
+        output03.txt
+        output08.txt
+    solution.js
 ```
 
-**hrtr** solution test-cases
+...you can run each test with
+
+```sh
+./node_modules/.bin/hrtr 2d-array/solution.js
+# or
+yarn hrtr 2d-array/solution.js
+```
+

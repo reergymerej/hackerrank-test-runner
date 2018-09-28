@@ -20,12 +20,15 @@ const solutionPath = path.resolve(cwd, solution)
 // TODO: handle missing
 
 // find test dir
-const testDir = process.argv[3]
-const testDirPath = path.resolve(cwd, testDir)
+const getTestDir = (explicit, solution) => {
+  const testDir = process.argv[3] || path.join(path.dirname(solution), 'tests')
+  return path.resolve(cwd, testDir)
+}
+const testDirPath = getTestDir(process.argv[3], solution)
 // log('testDirPath', testDirPath)
 // TODO: handle missing
 
-const outputPath = path.resolve(testDir, 'out.txt')
+const outputPath = path.resolve(path.dirname(testDirPath), 'out.txt')
 log('outputPath', outputPath)
 
 // find inputs
@@ -46,10 +49,8 @@ const outputs = inputs.map(x => {
 // log('outputs', outputs)
 
 // run tests
-// process.env.OUTPUT_PATH
 const runTest = (solution, input, output) => {
   // log('runTest', solution)
-  // cat tests/input/input00.txt | env OUTPUT_PATH=(pwd)/out.txt node solution.js
 
   const args = [
     solution,
@@ -81,11 +82,19 @@ const runTest = (solution, input, output) => {
   }
 }
 
+let failed = 0
 inputs.forEach((x, i) => {
   try {
     runTest(solutionPath, x, outputs[i])
   } catch (error) {
     console.log(`failed ${x}`)
     console.log(error.message)
+    failed++
   }
 })
+
+try {
+  fs.unlinkSync(outputPath)
+} catch (err) { }
+
+console.log(`passed ${inputs.length - failed}/${inputs.length} test cases`)
