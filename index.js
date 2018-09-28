@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const path = require('path')
 const spawn = require('child_process').spawnSync
@@ -84,6 +86,6 @@ inputs.forEach((x, i) => {
     runTest(solutionPath, x, outputs[i])
   } catch (error) {
     console.log(`failed ${x}`)
-    console.log(error)
+    console.log(error.message)
   }
 })
